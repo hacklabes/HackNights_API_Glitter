@@ -1,0 +1,75 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="data:;base64,=">
+    <script language="javascript" type="text/javascript" src="libs/p5.min.js"></script>
+    <script language="javascript" type="text/javascript" src="libs/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript" src="utils.js"></script>
+    <script language="javascript" type="text/javascript" src="sketch.js"></script>
+    <style>
+        body {margin: auto; width:66%;}
+        #myCanvas {margin: auto; }
+        #myCaption {font-family: Verdana; font-size: 18pt; font-weight: bold; color: #4E5665 }
+	</style>
+</head>
+
+<body>
+    <script>
+        var myID = '';
+        var myAccessToken = '';
+
+        // load FB SDK
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        // inits app, and subscribes to be notified when user has logged in
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '1667040290204775',
+                cookie: 'true',
+                xfbml: true,
+                version: 'v2.5'
+            });
+            FB.Event.subscribe('auth.authResponseChange', function(response) {
+                if (response.status == 'connected') {
+                    document.getElementById("myCanvas").onclick = function(){};
+                    document.getElementById("myCaption").innerHTML = "Press spacebar to post a text, click mouse to post an image";
+
+                    myID = response.authResponse.userID;
+                    myAccessToken = response.authResponse.accessToken;
+                    console.log(myID+" logged in");
+                }
+            });
+        };
+
+        function logMeIn(){
+            FB.login(function(){}, {scope: "user_likes,"+
+                                    "user_friends,"+
+                                    "user_posts,"+
+                                    "user_photos,"+
+                                    "user_videos,"+
+                                    "publish_actions"});
+        }
+
+        function postTextToFB(text){
+            console.log('POSTING TEXT');
+            FB.api('/me/feed','POST',{"message":text});
+        }
+        function postCanvasToFB(text){
+            console.log('POSTING CANVAS');
+            var dataURL = document.getElementsByTagName("canvas")[0].toDataURL("image/jpeg", 0.8);
+            postMultipart(dataURL, text, myID, myAccessToken);
+        }
+
+    </script>
+
+    <!--- Page goes here -->
+    <div id='myCanvas' onClick="logMeIn()"></div>
+    <div id='myCaption'></div>
+</body>    
+</html>
