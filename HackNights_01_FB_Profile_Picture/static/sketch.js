@@ -46,6 +46,7 @@ function getProfilePicture(url){
     mProfilePicture = loadImage(url, function(img){
         bLoadedPicture = true;
         resizeCanvas(img.width, img.height);
+        mProfilePicture.filter("POSTERIZE", 2);
         image(mProfilePicture,0,0);
     });
 }
