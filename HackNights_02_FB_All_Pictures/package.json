@@ -1,0 +1,18 @@
+{
+  "name": "hacknights_api_fb_photo_glitter",
+  "version": "0.0.1",
+  "description": "app to read and re-post all tagged pictures of the user",
+  "main": "serve.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hacklabes/HackNights_API_Glitter.git"
+  },
+  "author": "Thiago Hersan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
