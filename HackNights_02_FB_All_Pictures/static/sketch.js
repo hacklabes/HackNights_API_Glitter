@@ -64,17 +64,21 @@ function keyPressed(){
         postCanvasToFB('');
     }
     if((mPictures.length > 0) && ((key == 'P') || (key == 'N'))){
-        fill(COLORS[int(frameCount/24)%COLORS.length]);
         noStroke();
         currentSize = 4;
         var mData = mPictures.pop();
-        currentPicture = loadImage(mData.url, (function(x,y){
+        currentPicture = loadImage(mData.url, (function(tags){
             return function(img){
                 resizeCanvas(img.width, img.height);
                 image(currentPicture,0,0);
-                ellipse(x*img.width/100, y*img.height/100, img.width/6, img.width/6);
+                for(var i=0; i<tags.length; i++){
+                    var x = tags[i].x;
+                    var y = tags[i].y;
+                    fill(COLORS[floor(random(COLORS.length))]);
+                    ellipse(x*img.width/100, y*img.height/100, img.width/6, img.width/6);
+                }
             };
-        })(mData.x, mData.y));
+        })(mData.tags));
     }
     if((currentPicture != null) && (key == 'C')){
         image(currentPicture,0,0);

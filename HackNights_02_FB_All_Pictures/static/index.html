@@ -49,14 +49,13 @@
                         // go through the pictures
                         for(var i=0; i<response.data.length; i++){
                             var thisPicture = response.data[i];
+                            var tags = [];
                             // go through the tags
                             for(var j=0; j<thisPicture.tags.data.length; j++){
                                 var thisTag = thisPicture.tags.data[j];
-                                // if curret user, send to p5js
-                                if(thisTag.id == myID){
-                                    addPicture({url:thisPicture.images[0].source, x:thisTag.x, y:thisTag.y});
-                                }
+                                tags.push({x:thisTag.x, y:thisTag.y});
                             }
+                            addPicture({url:thisPicture.images[0].source, tags:tags});
                         }
                     }
                     // Get times of all posts on feed
