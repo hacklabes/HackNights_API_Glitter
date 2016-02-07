@@ -46,7 +46,6 @@ function getProfilePicture(url){
     mProfilePicture = loadImage(url, function(img){
         bLoadedPicture = true;
         resizeCanvas(img.width, img.height);
-        mProfilePicture.filter("POSTERIZE", 2);
         image(mProfilePicture,0,0);
     });
 }
@@ -64,6 +63,18 @@ function keyPressed(){
     }
     if((bLoadedPicture) && (key == 'C')){
         image(mProfilePicture,0,0);
+    }
+    if((bLoadedPicture) && (key == 'F')){
+        fImg = createImage(mProfilePicture.width, mProfilePicture.height);
+        fImg.copy(mProfilePicture,
+                  0,0, mProfilePicture.width,mProfilePicture.height,
+                  0,0, mProfilePicture.width,mProfilePicture.height);
+
+        fImg.filter("GRAY");
+        fImg.filter("ERODE");
+        fImg.filter("DILATE");
+
+        image(fImg,0,0);
     }
 }
 
