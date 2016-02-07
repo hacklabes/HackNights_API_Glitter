@@ -1,4 +1,4 @@
-function postMultipart(imgData, caption, userID, accessToken){
+function postMultipart(accessToken, imgData, caption, userID){
     // convert the base64 string to array of bytes
 
     // convert base64 string in imgData to binary data
@@ -20,7 +20,13 @@ function postMultipart(imgData, caption, userID, accessToken){
 
     var fdata = new FormData();
     fdata.append("source", blob);
-    fdata.append("caption", caption);
+
+    if(caption !== undefined){
+        fdata.append("caption", caption);
+    }
+    if(userID !== undefined){
+        fdata.append("tags", "[{'x':50,'y':50,'tag_uid':"+userID+"}]");
+    }
 
     $.ajax({
         url: 'https://graph.facebook.com/v2.5/me/photos?access_token='+accessToken,

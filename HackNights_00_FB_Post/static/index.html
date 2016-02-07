@@ -63,7 +63,7 @@
         function postCanvasToFB(text){
             console.log('POSTING CANVAS');
             var dataURL = document.getElementsByTagName("canvas")[0].toDataURL("image/jpeg", 0.8);
-            postMultipart(dataURL, text, myID, myAccessToken);
+            postMultipart(myAccessToken, dataURL, text, myID);
         }
 
     </script>

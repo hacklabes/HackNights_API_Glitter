@@ -38,7 +38,7 @@
             FB.Event.subscribe('auth.authResponseChange', function(response) {
                 if (response.status == 'connected') {
                     document.getElementById("myCanvas").onclick = function(){};
-                    document.getElementById("myCaption").innerHTML = "Click mouse to draw. Press 'c' to clear and 'p' to post";
+                    document.getElementById("myCaption").innerHTML = "Click mouse to draw. Press 'c' to clear, 'f' for filters and 'p' to post";
 
                     myID = response.authResponse.userID;
                     myAccessToken = response.authResponse.accessToken;
@@ -64,7 +64,7 @@
         function postCanvasToFB(text){
             console.log('POSTING CANVAS');
             var dataURL = document.getElementsByTagName("canvas")[0].toDataURL("image/jpeg", 0.8);
-            postMultipart(dataURL, text, myID, myAccessToken);
+            postMultipart(myAccessToken, dataURL);
         }
 
     </script>
